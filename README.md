@@ -1,5 +1,5 @@
 > [!WARNING]
-> This repo will no longer receive updates. Thank you to everyone who supported it.
+> Will try to keep support for this repo, inspired by [puppeteer-real-browser](https://github.com/zfcsoftware/puppeteer-real-browser)
 
 <br/>
 <p align="center">

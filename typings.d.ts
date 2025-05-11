@@ -1,13 +1,26 @@
-declare module "puppeteer-real-browser" {
-	import type { Browser, Page } from "rebrowser-puppeteer-core";
-	import type { GhostCursor } from "ghost-cursor";
+import type { Browser, Page } from "rebrowser-puppeteer-core";
+import type { GhostCursor } from "ghost-cursor";
+import type { Xvfb } from "xvfb";
+import { launch } from "chrome-launcher";
+
+interface PageWithCursor extends Page {
+	realClick: GhostCursor["click"];
+	realCursor: GhostCursor;
+}
+
+interface ProxyOptions {
+	host: string;
+	port: number;
+	username?: string;
+	password?: string;
+}
+
+
+declare module "puppeteer-undetectable" {
 
 	export function connect(options: Options): Promise<ConnectResult>;
 
-	interface PageWithCursor extends Page {
-		realClick: GhostCursor["click"];
-		realCursor: GhostCursor;
-	}
+	export type { PageWithCursor, ProxyOptions };
 
 	type ConnectResult = {
 		browser: Browser;
@@ -25,11 +38,20 @@ declare module "puppeteer-real-browser" {
 		plugins?: import("puppeteer-extra").PuppeteerExtraPlugin[];
 		ignoreAllFlags?: boolean;
 	}
+}
 
-	interface ProxyOptions {
-		host: string;
-		port: number;
-		username?: string;
-		password?: string;
-	}
+declare module "puppeteer-undetectable/lib/module/pageController" {
+	export function pageController(options: PageControllerOptions): Promise<PageWithCursor>;
+
+	interface PageControllerOptions {
+		browser: Browser;
+		page: Page;
+		proxy: ProxyOptions;
+		plugins: import("puppeteer-extra").PuppeteerExtraPlugin[];
+		turnstile?: boolean;
+		xvfbsession?: Xvfb;	
+		pid?: number;
+		killProcess?: boolean;
+		chrome?: Awaited<ReturnType<typeof launch>>;
+	};
 }
