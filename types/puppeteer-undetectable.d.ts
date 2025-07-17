@@ -1,6 +1,5 @@
-import type { Browser, Page } from "rebrowser-puppeteer-core";
+import type { Browser, Page } from "puppeteer-undetectable/rebrowser-puppeteer-core";
 import type { GhostCursor } from "ghost-cursor";
-
 
 export interface PageWithCursor extends Page {
     realClick: GhostCursor["click"];
@@ -14,26 +13,23 @@ export interface ProxyOptions {
     password?: string;
 }
 
-declare module "puppeteer-undetectable" {
+export function connect(options: Options): Promise<ConnectResult>;
 
-	export function connect(options: Options): Promise<ConnectResult>;
+export type { PageWithCursor, ProxyOptions };
 
-	export type { PageWithCursor, ProxyOptions };
+export type ConnectResult = {
+    browser: Browser;
+    page: PageWithCursor;
+};
 
-	type ConnectResult = {
-		browser: Browser;
-		page: PageWithCursor;
-	};
-
-	interface Options {
-		args?: string[];
-		headless?: boolean;
-		customConfig?: import("chrome-launcher").Options;
-		proxy?: ProxyOptions;
-		turnstile?: boolean;
-		connectOption?: import("rebrowser-puppeteer-core").ConnectOptions;
-		disableXvfb?: boolean;
-		plugins?: import("puppeteer-extra").PuppeteerExtraPlugin[];
-		ignoreAllFlags?: boolean;
-	}
+export interface Options {
+    args?: string[];
+    headless?: boolean;
+    customConfig?: import("chrome-launcher").Options;
+    proxy?: ProxyOptions;
+    turnstile?: boolean;
+    connectOption?: import("rebrowser-puppeteer-core").ConnectOptions;
+    disableXvfb?: boolean;
+    plugins?: import("puppeteer-extra").PuppeteerExtraPlugin[];
+    ignoreAllFlags?: boolean;
 }
