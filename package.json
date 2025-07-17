@@ -1,6 +1,6 @@
 {
   "name": "puppeteer-undetectable",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "This package is designed to bypass puppeteer's bot-detecting captchas such as Cloudflare. It acts like a real browser and can be managed with puppeteer.",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.mjs",
@@ -8,15 +8,17 @@
     ".": {
       "require": "./lib/cjs/index.js",
       "import": "./lib/esm/index.mjs",
-      "types": "./typings.d.ts"
+      "types": "./types/puppeteer-undetectable.d.ts"
     },
-    "./lib/module/pageController": {
+    "./page-controller": {
       "require": "./lib/cjs/module/pageController.js",
       "import": "./lib/esm/module/pageController.mjs",
-      "types": "./typings.d.ts"
+      "types": "./types/page-controller.d.ts"
+    },
+    "./rebrowser-puppeteer-core": {
+      "types": "./types/rebrowser-puppeteer-core.d.ts"
     }
   },
-  "typings": "typings.d.ts",
   "scripts": {
     "esm_test": "node ./test/esm/test.js",
     "cjs_test": "node ./test/cjs/test.js"
